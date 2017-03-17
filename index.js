@@ -29,7 +29,8 @@ var sobel_data = filters.sobel(
   {
     width: png.width,
     height: png.height,
-    data: greyscale_data
+    data: greyscale_data,
+    threshold: 10
   },
   [
     kernels.X,
@@ -44,15 +45,20 @@ var lines_data = filters.lines(
     width: png.width,
     height: png.height,
     data: sobel_data,
-    threshold: 200
+    threshold: 50
   }
 );
 console.timeEnd('lines');
 
 
 console.time('greyscale to rgba');
-png.data = filters.greyscale.toRGBA(lines_data);
+png.data = filters.greyscale.toRGBA(sobel_data);
 console.timeEnd('greyscale to rgba');
+
+
+console.time('overlay');
+png.data = filters.overlay(png.data, lines_data, 255, 0, 0);
+console.timeEnd('overlay');
 
 
 console.time('encode');
