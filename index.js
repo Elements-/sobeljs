@@ -45,7 +45,7 @@ var lines_data = filters.lines(
     width: png.width,
     height: png.height,
     data: sobel_data,
-    threshold: 50
+    threshold: 1
   }
 );
 console.timeEnd('lines');
